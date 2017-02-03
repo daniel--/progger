@@ -318,7 +318,7 @@ class levelEditor:
     def drawPlanet(self,p):
         c,r,i = p.pos.tup(),p.rad,p.imageIndex
         s = round(2 * r / 0.96) #magic
-        tempi = pygame.transform.rotate(pygame.transform.scale(self.images[i],(s,s)),p.ang)
+        tempi = pygame.transform.rotate(pygame.transform.scale(self.images[i],(int(s),int(s))),p.ang)
         rect = tempi.get_rect()
         rect.center = c
         self.updateArea.append(self.screen.blit(tempi,rect))
@@ -342,12 +342,15 @@ class levelEditor:
         
         
     def drawPath(self,p):
+        p = map(lambda x: (int(x[0]),int(x[1])),p)
         if len(p) > 1:
             self.updateArea.append(pygame.draw.lines(self.screen,(0,255,255),1,p))
         for point in p:
+            point = (int(point[0]),int(point[1]))
             self.updateArea.append(pygame.draw.circle(self.screen,(0,255,255),point,2))
     
     def erasePath(self,p):
+        p = map(lambda x: (int(x[0]),int(x[1])),p)
         if len(p) > 1:
             self.updateArea.append(pygame.draw.lines(self.screen,(0,0,0),1,p))
         for point in p:
@@ -373,7 +376,7 @@ class levelEditor:
                 r.top = 50+i*r.height
                 self.updateArea.append(self.screen.blit(f,r))
                 if self.legendSelectIndex == i:
-                    p = (45,50 + (i+0.5) * r.height)
+                    p = (45,int(50 + (i+0.5) * r.height))
                     self.updateArea.append(pygame.draw.circle(self.screen,(255,0,0),p,4))
         else:
             s = self.legend[0]
@@ -396,7 +399,7 @@ class levelEditor:
             h = r.height
             m = max(m,r.width)
             if self.legendSelectIndex == i:
-                    p = (45,50 + (i+0.5) * r.height)
+                    p = (45,int(50 + (i+0.5) * r.height))
                     self.updateArea.append(pygame.draw.circle(self.screen,(0,0,0),p,4))
         rect = pygame.Rect(50,50,m,h*len(self.legend))
         self.updateArea.append(pygame.draw.rect(self.screen,(0,0,0),rect))

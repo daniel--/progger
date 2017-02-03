@@ -222,7 +222,8 @@ class progger:
         newrect = s.get_rect()
         newrect.center = c
         self.screen.blit(s, newrect)
-        pygame.draw.circle(self.screen, (255,0,0), self.frog.pos, 0)
+        p = (int(self.frog.pos[0]), int(self.frog.pos[1]))
+        pygame.draw.circle(self.screen, (255,0,0), p, 0)
         
         #if the frog is outside of the screen draw a small indicator
         if not pygame.Rect(0,0,1024,768).collidepoint(self.frog.pos.inttup()):
@@ -230,7 +231,7 @@ class progger:
             y = self.frog.pos.y
             cx = min(max(x, 10), 1014)
             cy = min(max(y, 10), 738)
-            pygame.draw.circle(self.screen, (0, 255, 0), (cx, cy), 5)
+            pygame.draw.circle(self.screen, (0, 255, 0), (int(cx), int(cy)), 5)
                                
         #draw tongue
         v=vec2d(10,0)
